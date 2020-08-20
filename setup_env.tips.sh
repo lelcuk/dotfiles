@@ -2,7 +2,22 @@
 #
 #
 
+usage () {
+echo "
 
+Usage:
+$0 dotfile_set
+    will clone a copy of dotfiles into $HOME folder
+
+$0 debian_set
+    will install standrd shell utils such as vim and tmux
+
+$0 samba_set <NETBIOS NAME> <domain admin>
+    will setup this host as a domain member
+
+
+"
+}
 
 
 ##################################################################
@@ -49,8 +64,8 @@ samba_set () {
     # https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Domain_Member
     
     # We need to  have the new server name and the domain user to use
-    [ -z "$1" ] && echo "Please specify samba server name" && return
-    [ -z "$2" ] && echo "Please specify samba admin user name" && return
+    [ -z "$2" ] && echo "Please specify samba server name" && return
+    [ -z "$3" ] && echo "Please specify samba admin user name" && return
 
     sudo apt update
     sudo apt install samba winbind libnss-winbind libpam-winbind krb5-user || return
@@ -81,7 +96,7 @@ samba_set () {
 
 
     # add to domain controller
-    sudo net ads join -U $2
+    sudo net ads join -U $3
 
 
     # start the daemons
@@ -96,3 +111,19 @@ misc () {
     sudo update-alternatives --config editor # will set default editor in Ubuntu
     install fzf from https://github.com/junegunn/fzf
 }
+
+
+
+#########################################################
+# the "main" functiion
+case $1 in 
+    dotfile_set|debian_set|samba_set)
+        "$@"
+        ;;
+   *)
+        echo "Error: $@ unknown option"
+        usage
+        exit 1
+        ;;
+esac
+

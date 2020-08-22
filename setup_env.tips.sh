@@ -47,7 +47,7 @@ dotfile_set () {
         [ -f $i ] && mv $HOME/$i $HOME/$i.$(date +%Y%m%d)
     done
 
-    $git_bin --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout master
+    $git_bin --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout -f master
 
 }
 

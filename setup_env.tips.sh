@@ -25,16 +25,20 @@ $0 samba_set <NETBIOS NAME> <domain admin>
 # 
 dotfile_set () {
     git_bin="/usr/bin/git"
+
     # If .dotfile directory exists then the repository was initiated already
-    if [ -f $HOME/.dotfile ] ; then
-        $git_bin pull --bare https://github.com/lelcuk/dotfiles.git $HOME/.dotfiles
-        return
+    if [ -d $HOME/.dotfiles ] ; then
+        cd $HOME/.dotfiles
+        $git_bin fetch origin master:master
+        cd -
+    else
+        $git_bin clone --bare https://github.com/lelcuk/dotfiles.git $HOME/.dotfiles
     fi
 
-    $git_bin clone --bare https://github.com/lelcuk/dotfiles.git $HOME/.dotfiles
     alias dotfiles='$git_bin --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-    my_dotfiles=$($git_bin --git-dir=$HOME/.dotfiles/ --work-tree=$HOME ls-files)
+    my_dotfiles=$($git_bin --git-dir=$HOME/.dotfiles/ \
+               --work-tree=$HOME ls-tree --full-tree -r --name-only HEAD)
 
     # Checkout the dotfile relative to $HOME
     # backup all original files
@@ -42,7 +46,7 @@ dotfile_set () {
         [ -f $i ] && mv $HOME/$i $HOME/$i.$(date +%Y%m%d)
     done
 
-    $git_bin --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
+    $git_bin --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout master
 
 }
 

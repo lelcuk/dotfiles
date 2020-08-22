@@ -33,6 +33,7 @@ dotfile_set () {
         cd -
     else
         $git_bin clone --bare https://github.com/lelcuk/dotfiles.git $HOME/.dotfiles
+        $git_bin --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no
     fi
 
     alias dotfiles='$git_bin --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'

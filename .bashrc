@@ -1,4 +1,12 @@
+#      _____  .____     
+#     /  _  \ |    |     Alon Lelcuk
+#    /  /_\  \|    |     <alon@lelcuk.com>
+#   /    |    \    |___  2020
+#   \____|__  /_______ \
+#           \/        \/
+#
 # ~/.bashrc: executed by bash(1) for non-login shells.
+# ~/.profile or ~/.bash_profile are called at login first
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -122,6 +130,8 @@ sudox () {
 # $TMUX   $SHLVL $SSH_CLIENT  $SSH_CONNECTION
 # Also considure dbus via $DBUS_SESSION_BUS_ADDRESS
 
+
+
 ###################################################################
 #   L E S S
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -184,6 +194,9 @@ case "$TERM" in
          ;;
 esac
 
+# only show last two directoris in prompt
+PROMPT_DIRTRIM=2
+
 ###################################################################
 # Aliases:
 #
@@ -230,6 +243,7 @@ alias gs='git status'
 
 # bare git repo alias for dotfiles
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+# to marge use "dotfile push origin master"
 
 
 # Merge Xresources
@@ -258,10 +272,11 @@ if [ -n "$SSH_CLIENT" ] ; then
    SCREEN_NAME=$SSH_CLIENT
 fi
 
-PROMPT_DIRTRIM=2
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-stty -ixon
+# disable XON/XOFF ctrl-s ctrl-q 
+# TODO need to skip this if a slow remote terminal
+stty -ixon -ixoff
 
 #if [ -f /usr/bin/most ]; then
     # export PAGER="most"
@@ -305,7 +320,7 @@ run_powerline () {
 run_tmux () {
    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] \
              && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-      tsessions=`tmux ls -F "#{session_name}: #{?session_attached,attached,detached}"`
+      tsessions=`tmux ls -F "#{session_name}: #{?session_attached,attached,detached}" 2>/dev/null`
       if [[ ! $tsessions ]] ; then
           tmux -u new-session -A -s main # remove exec so i can exit into bash without logging out
       else

@@ -112,12 +112,40 @@ misc () {
     install fzf from https://github.com/junegunn/fzf
 }
 
+#########################################################
+# MacOs Specific
+#########################################################
+# setup brew
+brew_set () {
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
+    brew install tmux ranger mc wget htop bash coreutils
+}
 
 #########################################################
 # the "main" functiion
+#########################################################
+arch=$(uname -m)
+# Linux, MacOs or some varient of Cygwin
+platform=$(uname -s) # Linux, Darwin and CYGWIN*|MINGW32*|MSYS*|MINGW*
+# are we on WSL/WSL2
+if grep -qEi "(microsoft|WSL)" /proc/version &> /dev/null ; then
+    platform="$platform-WSL"
+fi
+
 case $1 in 
-    dotfile_set|debian_set|samba_set)
+    dotfile_set)
+        "$@"
+        ;;
+    debian_set|samba_set)
+        # need to check for dabien
+        "$@"
+        ;;
+    misc)
+        ;;
+    brew_set)
+        [ "$platform" != "Darwin" ] && echo "Error: Not a MacOs platform" && exit 2
+        # need to check for mac
         "$@"
         ;;
    *)

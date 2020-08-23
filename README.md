@@ -1,5 +1,7 @@
 # dotfiles
 My Linux dot files and other useful files 
+see https://www.atlassian.com/git/tutorials/dotfiles
+https://www.ackama.com/blog/posts/the-best-way-to-store-your-dotfiles-a-bare-git-repository-explained
 
 
 `git clone --bare https://github.com/lelcuk/dotfiles.git $HOME/.dotfiles`

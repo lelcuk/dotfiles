@@ -318,6 +318,7 @@ run_powerline () {
 #
 ###################################################################
 run_tmux () {
+   [ -f $HOME/.notmux ] && return
    if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] \
              && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
       tsessions=`tmux ls -F "#{session_name}: #{?session_attached,attached,detached}" 2>/dev/null`

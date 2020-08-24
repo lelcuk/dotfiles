@@ -1,7 +1,9 @@
 # Setup fzf
 # ---------
-if [[ ! "$PATH" == */mnt/private/home/lelcuk/.fzf/bin* ]]; then
-  export PATH="${PATH:+${PATH}:}/mnt/private/home/lelcuk/.fzf/bin"
+if [[ ! "$PATH" == *$HOME/.fzf/bin* ]]; then
+    export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
+elif ! command -v fzf  &> /dev/null ; then
+    exit
 fi
 
 # Auto-completion

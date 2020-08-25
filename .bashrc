@@ -89,6 +89,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# SET VI MODE IN BASH SHELL
+set -o vi
+
+# Ignore upper and lowercase when TAB completion
+bind "set completion-ignore-case on"
 
 #######################################################################
 ### Usfull  functions

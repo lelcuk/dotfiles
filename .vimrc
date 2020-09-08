@@ -42,9 +42,24 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 " see http://vimdoc.sourceforge.net/htmldoc/options.html
 set mouse=n
 
+" set paste/nopaste to allow no auto indent when pasting, a better solution is
+" avilable here:
+" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
 
 " plugins manager
 " https://github.com/junegunn/vim-plug
+" to install run: curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 " Use :PlugInstall to install all plugins
 call plug#begin('~/.vim/plugged')
 

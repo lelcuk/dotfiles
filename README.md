@@ -13,3 +13,7 @@ or:
 `wget https://raw.githubusercontent.com/lelcuk/dotfiles/master/setup_env.tips.sh`
 
 `bash setup_env.tips.sh dotfile_set`
+
+install vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

@@ -4,6 +4,3 @@ alias lessh='LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s" 
 #alias updater='gnome-terminal -- apt-dater'
 alias updater='rxvt -e apt-dater'
 
-# Set got bare ripo for dotfiles
-alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
-

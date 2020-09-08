@@ -33,6 +33,7 @@ case "$platform" in
         GNU_PRE=""
         DIRCOLORS="/usr/bin/dircolors"
         POWERLINE_B="/usr/share/powerline/bindings/bash/powerline.sh"
+        somthing=$(lsb_release -dc)
         ;;&
     *WSL)
         # Specific wsl overwrits for the standard Linux settings
@@ -287,6 +288,8 @@ stty -ixon -ixoff
     # export PAGER="most"
 #fi
 
+# Fix ^L issues
+bind -x '"\C-l": clear'
 
 
 ###################################################################

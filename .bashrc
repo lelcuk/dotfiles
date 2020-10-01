@@ -255,12 +255,17 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 # Merge Xresources
 alias merge='xrdb -merge ~/.Xresources'
 
+alias fd="fdfind"
+
+# Batter pager if avilable
+[ -x /usr/bin/most ] && alias ls='most'
+[ -x /usr/bin/batcat ] && alias ls='batcat'
+[ -x /usr/bin/bat ] && alias ls='bat'
+
 # More alias definitions:
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'

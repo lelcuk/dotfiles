@@ -58,7 +58,7 @@ dotfile_set () {
 debian_set () {
     # this should also work in ubuntu and raspos
     sudo apt update
-    sudp apt install -y -m git curl
+    sudo apt install -y -m git curl ncdu fd-finder most
     sudo apt install -y -m tmux ranger mc vim powerline fonts-powerline exa
 
 
@@ -95,8 +95,8 @@ samba_set () {
     data_dirs=$(smbd -b | egrep "LOCKDIR|STATEDIR|CACHEDIR|PRIVATE_DIR")
     for i in $data_dirs ; do
         dir=$(echo $i | awk -F ':' '{print $2}')
-        rm -q $dir/*.tdb
-        rm -q $dir/*.ldb
+        sudo rm $dir/*.tdb
+        sudo rm $dir/*.ldb
     done
     
     # copy smb.conf, user.map and krb.conf to thye right place

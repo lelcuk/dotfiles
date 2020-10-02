@@ -255,13 +255,16 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 # Merge Xresources
 alias merge='xrdb -merge ~/.Xresources'
 
-alias fd="fdfind"
+[ -x /usr/bin/fdfind ] alias fd="fdfind"
 
 # Batter pager if avilable
-[ -x /usr/bin/most ] && alias ls='most'
-[ -x /usr/bin/batcat ] && alias ls='batcat'
-[ -x /usr/bin/bat ] && alias ls='bat'
+[ -x /usr/bin/most ] && alias less='most'
+[ -x /usr/bin/batcat ] && alias less='batcat'
+[ -x /usr/bin/bat ] && alias less='bat'
 
+which vim > /dev/null ; if [ $? == 0 ] ; then
+    export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
+fi
 # More alias definitions:
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
